@@ -12,12 +12,20 @@
 </head>
 
 <body>
-	<form method="POST" action="/new_video">
-		<label for="company_name">company name:</label>
-		<input id="company_name" type="text">
+	<h1 style="padding-bottom: 15px;"><center>Add company</center></h1>
 
-		<input class="btn btn-primary" type="submit" value="generate video">
-	</form>
+	<div class="row">
+		<div class="col-md-6 col-md-offset-3">
+			<form method="POST" action="/new_video">
+				<div class="form-group">
+					<label for="company_name">Company name:</label>
+					<input class="form-control" id="company_name" type="text" placeholder="Company name">
+				</div>
+
+				<button class="btn btn-primary" type="submit">Submit</button>
+			</form>
+		</div>
+	</div>
 </body>
 
 </html>
