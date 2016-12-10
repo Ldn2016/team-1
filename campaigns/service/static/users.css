@@ -18,11 +18,15 @@ body {
   background-color: #ee0020;
 }
 .btn-danger:hover {
-	text-shadow: #fff 0 0 4px;
+  text-shadow: #fff 0 0 4px;
   border-color: #d6001d;
   background-color: #ee0020;
 }
 .btn-danger {
+  border-color: #d6001d;
+  background-color: #ee0020;
+}
+.pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover {
   border-color: #d6001d;
   background-color: #ee0020;
 }
