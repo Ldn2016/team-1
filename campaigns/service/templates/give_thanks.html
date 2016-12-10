@@ -1,3 +1,4 @@
+
 <!doctype html>
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -30,41 +31,13 @@
   </nav>
 
   <div class="container-fluid">
-    <div class="col-sm-6 col-sm-offset-1 main">
-      <h2 class="sub-header">Users</h2>
-      <div class="table-responsive">
-        <table class="table table-striped" id="users">
-          <thead>
-            <tr>
-              <th>User Id</th>
-              <th>Name</th>
-              <th>Phone Number</th>
-              <th>Email</th>
-            </tr>
-          </thead>
-            {% for user in users %}
-            <tr>
-              <td>{{ user['_id'] }}</td>
-              <td>{{ user['name'] }}</td>
-              <td>{{ user['phone'] }}</td>
-              <td>{{ user['email'] }}</td>
-            </tr>
-            {% endfor %}
-          <tbody>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-  <div class="container-fluid">
-    <div class="col-sm-8 col-sm-offset-1 main">
-      <h2 class="sub-header">Add User</h2>
-        <form method="POST" action="/api/add_user">
-        <input class="form" id="id" name="id" type="text" placeholder="User Id">
-        <input class="form" id="name" name="name" type="text" placeholder="Name">
-        <input class="form" id="phone" name="phone" type="text" placeholder="Phone Number">
-        <input class="form" id="email" name="email" type="text" placeholder="Email">
-        <br /><br />
+    <div class="col-sm-3 col-sm-offset-1 main">
+      <h2 class="sub-header">Give Thanks</h2>
+        <form method="POST" action="/api/give_thanks">
+         <div class="form-group">
+           <label for="sms">SMS:</label>
+           <textarea class="form-control" rows="8" id="comment"></textarea>
+        </div>
         <button class="btn btn-primary" type="submit">Submit</button>
         </form>
     </div>
@@ -79,9 +52,4 @@
 
 	<!-- Latest compiled JavaScript -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <script>
-    $(document).ready(function() {
-      $('#users').DataTable();
-    } );
-  </script>
 </html>
