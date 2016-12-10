@@ -125,3 +125,7 @@ def get_donations():
 @app.route('/sales', methods=['GET'])
 def get_sales():
     return render_template('sales.html')
+    
+@app.route('/give_thanks', methods=['GET'])
+def give_thanks():
+    return render_template('give_thanks.html')
