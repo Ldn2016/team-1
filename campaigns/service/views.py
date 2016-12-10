@@ -40,9 +40,7 @@ def add_user():
     insert_result = users_db.insert_one(post)
     assert insert_result.acknowledged
 
-    return Response(
-        'Success: Added a new user with id {}!'.format(args[id_idx]),
-        status=200)
+    return Response(get_users(), status=200)
 
 @app.route('/api/add_donation', methods=['POST'])
 def add_donation():
@@ -70,21 +68,13 @@ def add_donation():
     insert_result = donations_db.insert_one(post)
     assert insert_result.acknowledged
 
-    return Response('Success: Added a new donation with id {}, from user{}'\
-                        .format(args[id_idx], args[user_id_idx]), status=200)
-
-def make_message(donor, buyer, donation):
-    sms_body = 'Hi {}! Your {} donation ({}) to British Heart Foundation ' \
-               'reached {}\'s home. Thank you.' \
-        .format(donor['name'], donation['amount'], donation['object'],
-                buyer['name'])
-
-    return sms_body
+    return Response(get_donations(), status=200)
 
 @app.route('/api/add_sale', methods=['POST'])
 def add_route():
     params = ['donation_id', 'amount', 'buyer_id']
     donation_id_idx = params.index('donation_id')
+    amount_idx = params.index('amount')
     buyer_id_idx = params.index('buyer_id')
     args = [request.form.get(param) for param in params]
     if not all(args):
@@ -110,11 +100,13 @@ def add_route():
     assert user
 
     # Send him a message.
-    send_sms(user['phone'], make_message(user, buyer, donation))
+    sms_body = 'Hi {}! Your {} donation ({}) to British Heart Foundation ' \
+               'reached {}\'s home. Thank you.' \
+        .format(user['name'], donation['object'], args[amount_idx], \
+                buyer['name'])
+    send_sms(user['phone'], sms_body)
 
-    return Response(
-        'Success: sent a thank you message to user {}'.format(user),
-        status=200)
+    return Response(get_sales(), status=200)
 
 @app.route('/users', methods=['GET'])
 def get_users():
