@@ -1,5 +1,6 @@
 from flask import request, Response
 from service import app, mongo
+from service.sms_api import send_sms
 
 @app.route('/', methods=['GET'])
 def index():
@@ -75,5 +76,28 @@ def add_donation():
 
 @app.route('/api/add_sale', methods=['POST'])
 def add_route():
-    # TODO:
-    return Response('Success:', status=200)
+    params = ['donation_id']
+    donation_id_idx = params.index('donation_id')
+    args = [request.form.get(param) for param in params]
+    if not all(args):
+        return Response('Failure: some arguments are not valid', status=400)
+
+    users_db = mongo.db[USERS_DB]
+    donations_db = mongo.db[DONATIONS_DB]
+
+    # Check that the referenced donation exists.
+    donation = donations_db.find_one({PRIMARY_KEY : args[donation_id_idx]})
+    if not donation:
+        return Response('Failure: referenced donation id does not exist',
+                        status=400)
+
+    # Find out the details of the user that donation refers to.
+    user = users_db.find_one({PRIMARY_KEY : donation['user_id']})
+    assert user
+
+    # Send him a message.
+    send_sms(user['phone'])
+
+    return Response(
+        'Success: sent a thank you message to user {}'.format(user),
+        status=200)
