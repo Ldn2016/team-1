@@ -1,0 +1,77 @@
+<!doctype html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Bootstrap -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/static/users.css">
+</head>
+
+<body>
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">British Heart Foundation</a>
+      </div>
+      <div id="navbar" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-left">
+          <li><a href="/users">Users</a></li>
+          <li><a href="/domains">Donations</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container-fluid">
+    <div class="col-sm-6 col-sm-offset-1 main">
+      <h2 class="sub-header">Donations</h2>
+      <div class="table-responsive">
+        <table class="table table-striped" id="donations">
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Donor Id</th>
+              <th>Shopper Id</th>
+              <th>Value</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="col-sm-6 col-sm-offset-1 main">
+      <h2 class="sub-header">Add Donation</h2>
+        <form method="POST" action="/donations/add_donation">
+        <div class="form-group">
+          <input class"form-control" id="donation_donor_id" type="text" placeholder="Donor Id">
+          <input class"form-control" id="donation_shopper_id" type="text" placeholder="Shopper Id">
+          <input class"form-control" id="donation_value" type="text" placeholder="Value">
+        </div>
+        <button class="btn btn-primary" type="donation_submit">Submit</button>
+        </form>
+    </div>
+  </div>
+
+
+</body>
+	<!-- JQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.13/js/dataTables.bootstrap.min.js"></script>
+
+	<!-- Latest compiled JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $('#donations').DataTable();
+    } );
+  </script>
+</html>
