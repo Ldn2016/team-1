@@ -16,8 +16,18 @@ def new_video():
 def get_video(url):
     captions = json.dumps([{
         'text': 'J.P. Morgan',
-        'time': 3.2,
-        'duration': 2
+        'time': 1.2,
+        'duration': 4,
+        'x': 50,
+        'y': 40,
+        'size': 7,
+    }, {
+        'text': 'Hugo Boss',
+        'time': 1.2,
+        'duration': 4,
+        'x': 50,
+        'y': 70,
+        'size': 7,
     }])
     return render_template('video.html', captions=captions)
 

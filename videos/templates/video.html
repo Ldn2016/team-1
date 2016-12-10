@@ -17,10 +17,23 @@ function resize() {
 	iframe.width(iframe.width() * by);
 }
 
-function drawCaptions() {
-	for (let caption of captions) {
-		console.log(caption);
-	}
+function setupDrawingInterval() {
+	setInterval(function() {
+		for (let caption of captions) {
+			var time = player.getCurrentTime();
+			if (time >= caption.time && time <= caption.time + caption.duration && !caption.visible) {
+				caption.visible = true;
+				caption.element = $('<div class="caption">' + caption.text + '</div>');
+				caption.element.css("left", caption.x + "%").css("top", caption.y + "%");
+				caption.element.css("font-size", caption.size + "em");
+				$("#captions").append(caption.element);
+			}
+			if ((time < caption.time || time > caption.time + caption.duration) && caption.visible) {
+				caption.visible = false;
+				caption.element.remove();
+			}
+		}
+	}, 100);
 }
 
 function onYouTubeIframeAPIReady() {
@@ -32,13 +45,14 @@ function onYouTubeIframeAPIReady() {
 			loop: 1,
 			showinfo: 0,
 			controls: 0
+		},
+		events: {
+			'onReady': setupDrawingInterval
 		}
 	});
 
 	resize();
 	$(window).resize(resize);
-
-	setInterval(drawCaptions, 100);
 }
 	</script>
 
@@ -58,11 +72,18 @@ body {
 	display: block;
 	margin: 0 auto;
 }
+
+.caption {
+	color: white;
+	position: absolute;
+	-webkit-transform: translate(-50%, -50%);
+}
 	</style>
 </head>
 
 <body>
 	<div id="info">captions: {{ captions }}</div>
+	<div id="captions"></div>
 	<div id="player"></div>
 </body>
 
