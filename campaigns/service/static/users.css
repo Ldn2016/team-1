@@ -4,3 +4,25 @@ body {
 .table-responsive {
   overflow: visible;
 }
+.navbar-inverse .navbar-brand {
+  color: white;
+}
+.navbar-inverse .navbar-nav > li > a:hover {
+	text-shadow: #fff 0 0 4px;
+:
+}
+.navbar-inverse .navbar-nav > li > a {
+  color: white;
+}
+.navbar-inverse {
+  background-color: #ee0020;
+}
+.btn-danger:hover {
+	text-shadow: #fff 0 0 4px;
+  border-color: #d6001d;
+  background-color: #ee0020;
+}
+.btn-danger {
+  border-color: #d6001d;
+  background-color: #ee0020;
+}
