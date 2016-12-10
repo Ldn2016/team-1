@@ -46,8 +46,7 @@ def add_user():
 
 @app.route('/api/add_donation', methods=['POST'])
 def add_donation():
-    # TODO: Add more relevant params.
-    params = ['id', 'user_id']
+    params = ['id', 'user_id', 'object']
     id_idx, user_id_idx = params.index('id'), params.index('user_id')
     args = [request.form.get(param) for param in params]
     if not all(args):
@@ -74,10 +73,19 @@ def add_donation():
     return Response('Success: Added a new donation with id {}, from user{}'\
                         .format(args[id_idx], args[user_id_idx]), status=200)
 
+def make_message(donor, buyer, donation):
+    sms_body = 'Hi {}! Your {} donation ({}) to British Heart Foundation ' \
+               'reached {}\'s home. Thank you.' \
+        .format(donor['name'], donation['amount'], donation['object'],
+                buyer['name'])
+
+    return sms_body
+
 @app.route('/api/add_sale', methods=['POST'])
 def add_route():
-    params = ['donation_id']
+    params = ['donation_id', 'amount', 'buyer_id']
     donation_id_idx = params.index('donation_id')
+    buyer_id_idx = params.index('buyer_id')
     args = [request.form.get(param) for param in params]
     if not all(args):
         return Response('Failure: some arguments are not valid', status=400)
@@ -91,14 +99,18 @@ def add_route():
         return Response('Failure: referenced donation id does not exist',
                         status=400)
 
+    # Check that the buyer exists.
+    buyer = users_db.find_one({PRIMARY_KEY : args[buyer_id_idx]})
+    if not buyer:
+        return Response('Failure: referenced buyer id does not exist',
+                        status=400)
+
     # Find out the details of the user that donation refers to.
     user = users_db.find_one({PRIMARY_KEY : donation['user_id']})
     assert user
 
     # Send him a message.
-    sms_body = '''Hi {}! Your sofa donation to British Heart Foundation reached
-    <someone else>\'s home. Blabla. Thank you.'''.format(user['name'])
-    send_sms(user['phone'], sms_body)
+    send_sms(user['phone'], make_message(user, buyer, donation))
 
     return Response(
         'Success: sent a thank you message to user {}'.format(user),

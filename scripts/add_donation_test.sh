@@ -5,4 +5,6 @@ if [ $# -ne 2 ]; then
   exit 1
 fi
 
-curl --data "id=${1}&user_id=${2}" http://localhost:5000/api/add_donation
+curl \
+  --data "id=${1}&user_id=${2}&object=sofa" \
+  http://localhost:5000/api/add_donation
