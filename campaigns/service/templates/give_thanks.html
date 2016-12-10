@@ -34,10 +34,9 @@
     <div class="col-sm-3 col-sm-offset-1 main">
       <h2 class="sub-header">Give Thanks</h2>
         <form method="POST" action="/api/give_thanks">
-         <div class="form-group">
-           <label for="sms">SMS:</label>
-           <textarea class="form-control" rows="8" id="comment"></textarea>
-        </div>
+         <label for="sms">SMS:</label>
+         <textarea class="form-control" rows="8" name="sms" id="sms"></textarea>
+         <br />
         <button class="btn btn-primary" type="submit">Submit</button>
         </form>
     </div>
