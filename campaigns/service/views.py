@@ -1,6 +1,8 @@
-from flask import render_template, request, Response
+from bson.objectid import ObjectId
+from flask import render_template, request, json, Response, redirect, url_for
 from service import app, mongo
 from service.sms_api import send_sms
+
 
 @app.route('/', methods=['GET'])
 def index():
@@ -161,3 +163,46 @@ def get_sales():
 @app.route('/give_thanks', methods=['GET'])
 def get_give_thanks():
     return render_template('give_thanks.html')
+
+
+@app.route('/new_video', methods=['GET'])
+def new_video():
+    return render_template('index.html')
+
+
+@app.route('/new_video', methods=['POST'])
+def new_video_post():
+    company_name = request.form['company_name']
+    value = request.form['value']
+
+    _id = mongo.db.videos.insert({'company_name': company_name, 'value': value})
+    return redirect(url_for('get_video', _id=_id))
+
+
+@app.route('/videos/<_id>', methods=['GET'])
+def get_video(_id):
+    video = mongo.db.videos.find_one({'_id': ObjectId(_id)})
+
+    captions = json.dumps([{
+        'text': 'At {} we care'.format(video['company_name']),
+        'time': 60 + 3,
+        'duration': 6,
+        'x': 50,
+        'y': 50,
+        'size': 4,
+    }, {
+        'text': 'We give for a better future',
+        'time': 60 + 12,
+        'duration': 6,
+        'x': 50,
+        'y': 50,
+        'size': 4,
+    }, {
+        'text': 'This year, our donations brought {} to research'.format(video['value']),
+        'time': 60 + 21,
+        'duration': 7,
+        'x': 50,
+        'y': 50,
+        'size': 4,
+    }])
+    return render_template('video.html', captions=captions)
