@@ -22,6 +22,7 @@
         <ul class="nav navbar-nav navbar-left">
           <li><a href="/users">Users</a></li>
           <li><a href="/donations">Donations</a></li>
+          <li><a href="/sales">Sales</a></li>
         </ul>
       </div>
     </div>
@@ -34,7 +35,7 @@
         <table class="table table-striped" id="users">
           <thead>
             <tr>
-              <th>Id</th>
+              <th>User Id</th>
               <th>First Name</th>
               <th>Last Name</th>
               <th>Email</th>
@@ -48,10 +49,11 @@
     </div>
   </div>
   <div class="container-fluid">
-    <div class="col-sm-6 col-sm-offset-1 main">
+    <div class="col-sm-8 col-sm-offset-1 main">
       <h2 class="sub-header">Add User</h2>
-        <form method="POST" action="/users/add_user">
-        <div class="form-group">
+        <form method="POST" action="/api/add_user">
+        <div class="form-group" >
+          <input class"form-control" id="user_id" type="text" placeholder="User Id">
           <input class"form-control" id="user_first_name" type="text" placeholder="First Name">
           <input class"form-control" id="user_last_name" type="text" placeholder="Last Name">
           <input class"form-control" id="user_phone_number" type="text" placeholder="Phone Number">

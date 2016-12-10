@@ -29,33 +29,13 @@
   </nav>
 
   <div class="container-fluid">
-    <div class="col-sm-6 col-sm-offset-1 main">
-      <h2 class="sub-header">Donations</h2>
-      <div class="table-responsive">
-        <table class="table table-striped" id="donations">
-          <thead>
-            <tr>
-              <th>Donation Id</th>
-              <th>User Id</th>
-              <th>Object</th>
-            </tr>
-          </thead>
-          <tbody>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-  <div class="container-fluid">
     <div class="col-sm-8 col-sm-offset-1 main">
-      <h2 class="sub-header">Add Donation</h2>
-        <form method="POST" action="/api/add_donation">
+      <h2 class="sub-header">Add Sale</h2>
+        <form method="POST" action="/api/add_sale">
         <div class="form-group">
-          <input class"form-control" id="donation_id" type="text" placeholder="Donation Id">
-          <input class"form-control" id="donation_user_id" type="text" placeholder="User Id">
-          <input class"form-control" id="donation_object" type="text" placeholder="Object">
+          <input class"form-control" id="sale_donation_id" type="text" placeholder="Donation Id">
         </div>
-        <button class="btn btn-primary" type="donation_submit">Submit</button>
+        <button class="btn btn-primary" type="sale_submit">Submit</button>
         </form>
     </div>
   </div>
