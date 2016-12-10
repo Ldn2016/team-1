@@ -118,11 +118,17 @@ def add_route():
 
 @app.route('/users', methods=['GET'])
 def get_users():
-    return render_template('users.html')
+    users_db = mongo.db[USERS_DB]
+    users = users_db.find()
+
+    return render_template('users.html', users=users)
 
 @app.route('/donations', methods=['GET'])
 def get_donations():
-    return render_template('donations.html')
+    donations_db = mongo.db[DONATIONS_DB]
+    donations = donations_db.find()
+
+    return render_template('donations.html', donations=donations)
 
 @app.route('/sales', methods=['GET'])
 def get_sales():
