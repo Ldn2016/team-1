@@ -1,1 +1,2 @@
-stuff related to SMS / email compaigns.
+# SMS Campaigns for donors and shoppers
+
