@@ -14,6 +14,13 @@ def index():
 
     return Response('Sanity checks successful!', status=200)
 
+@app.route('/clear_database', methods=['GET'])
+def clear_database():
+    mongo.db[USERS_DB].drop()
+    mongo.db[DONATIONS_DB].drop()
+
+    return Response('Cleaned database!', status=200)
+
 USERS_DB = 'users'
 DONATIONS_DB = 'donations'
 PRIMARY_KEY = '_id'
@@ -37,6 +44,8 @@ def add_user():
 
     # Add it to the users database.
     post = {param : arg for param, arg in zip(params, args)}
+    post['is_shopper'] = False
+
     insert_result = users_db.insert_one(post)
     assert insert_result.acknowledged
 
@@ -46,7 +55,7 @@ def add_user():
 def add_donation():
     params = ['id', 'user_id', 'object']
     id_idx, user_id_idx = params.index('id'), params.index('user_id')
-    args = [request.form.get(param) for param in params]
+    args = [request.form[param] for param in params]
     if not all(args):
         return Response('Failure: some arguments are not valid', status=400)
 
@@ -76,7 +85,7 @@ def add_route():
     donation_id_idx = params.index('donation_id')
     amount_idx = params.index('amount')
     buyer_id_idx = params.index('buyer_id')
-    args = [request.form.get(param) for param in params]
+    args = [request.form[param] for param in params]
     if not all(args):
         return Response('Failure: some arguments are not valid', status=400)
 
@@ -95,6 +104,10 @@ def add_route():
         return Response('Failure: referenced buyer id does not exist',
                         status=400)
 
+    # Mark it as a shopper.
+    users_db.update_one({PRIMARY_KEY : args[buyer_id_idx]},
+                        {'$set' : {'is_shopper' : True}})
+
     # Find out the details of the user that donation refers to.
     user = users_db.find_one({PRIMARY_KEY : donation['user_id']})
     assert user
@@ -107,6 +120,25 @@ def add_route():
     send_sms(user['phone'], sms_body)
 
     return Response(get_sales(), status=200)
+
+@app.route('/api/give_thanks', methods=['POST'])
+def give_thanks():
+    sms_arg = request.form['sms']
+    if not sms_arg:
+        return Response('Failure: some arguments are not valid', status=400)
+
+    users_db = mongo.db[USERS_DB]
+    counter = 0
+
+    for user in users_db.find():
+        if user['is_shopper']:
+            send_sms(user['phone'], sms_arg)
+            users_db.update_one({PRIMARY_KEY : user[PRIMARY_KEY]},
+                                {'$set' : {'is_shopper' : False}})
+            counter += 1
+
+    print('Sent sms to {} people'.format(counter))
+    return Response(get_give_thanks(), status=200)
 
 @app.route('/users', methods=['GET'])
 def get_users():
@@ -125,7 +157,7 @@ def get_donations():
 @app.route('/sales', methods=['GET'])
 def get_sales():
     return render_template('sales.html')
-    
+
 @app.route('/give_thanks', methods=['GET'])
-def give_thanks():
+def get_give_thanks():
     return render_template('give_thanks.html')
