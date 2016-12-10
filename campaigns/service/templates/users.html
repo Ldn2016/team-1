@@ -36,10 +36,9 @@
           <thead>
             <tr>
               <th>User Id</th>
-              <th>First Name</th>
-              <th>Last Name</th>
-              <th>Email</th>
+              <th>Name</th>
               <th>Phone Number</th>
+              <th>Email</th>
             </tr>
           </thead>
           <tbody>
@@ -52,14 +51,12 @@
     <div class="col-sm-8 col-sm-offset-1 main">
       <h2 class="sub-header">Add User</h2>
         <form method="POST" action="/api/add_user">
-        <div class="form-group" >
-          <input class"form-control" id="user_id" type="text" placeholder="User Id">
-          <input class"form-control" id="user_first_name" type="text" placeholder="First Name">
-          <input class"form-control" id="user_last_name" type="text" placeholder="Last Name">
-          <input class"form-control" id="user_phone_number" type="text" placeholder="Phone Number">
-          <input class"form-control" id="user_email" type="text" placeholder="Email">
-        </div>
-        <button class="btn btn-primary" type="user_submit">Submit</button>
+        <input class="form" id="id" name="id" type="text" placeholder="User Id">
+        <input class="form" id="name" name="name" type="text" placeholder="Name">
+        <input class="form" id="phone" name="phone" type="text" placeholder="Phone Number">
+        <input class="form" id="email" name="email" type="text" placeholder="Email">
+        <br /><br />
+        <button class="btn btn-primary" type="submit">Submit</button>
         </form>
     </div>
   </div>

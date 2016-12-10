@@ -50,12 +50,11 @@
     <div class="col-sm-8 col-sm-offset-1 main">
       <h2 class="sub-header">Add Donation</h2>
         <form method="POST" action="/api/add_donation">
-        <div class="form-group">
-          <input class"form-control" id="donation_id" type="text" placeholder="Donation Id">
-          <input class"form-control" id="donation_donor_id" type="text" placeholder="Donor Id">
-          <input class"form-control" id="donation_object" type="text" placeholder="Object">
-        </div>
-        <button class="btn btn-primary" type="donation_submit">Submit</button>
+        <input class="form" id="id" name="id" type="text" placeholder="Donation Id">
+        <input class="form" id="user_id" name="user_id" type="text" placeholder="Donor Id">
+        <input class="form" id="object" name="object" type="text" placeholder="Object">
+        <br /><br />
+        <button class="btn btn-primary" type="submit">Submit</button>
         </form>
     </div>
   </div>

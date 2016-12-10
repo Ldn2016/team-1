@@ -32,12 +32,11 @@
     <div class="col-sm-8 col-sm-offset-1 main">
       <h2 class="sub-header">Add Sale</h2>
         <form method="POST" action="/api/add_sale">
-        <div class="form-group">
-          <input class"form-control" id="sale_donation_id" type="text" placeholder="Donation Id">
-          <input class"form-control" id="sale_buyer_id" type="text" placeholder="Buyer Id">
-          <input class"form-control" id="sale_value" type="text" placeholder="Value">
-        </div>
-        <button class="btn btn-primary" type="sale_submit">Submit</button>
+        <input class="form" id="donation_id" name="donation_id" type="text" placeholder="Donation Id">
+        <input class="form" id="buyer_id" name="buyer_id" type="text" placeholder="Buyer Id">
+        <input class="form" id="amount" name="amount" type="text" placeholder="Value">
+        <br /><br />
+        <button class="btn btn-primary" type="submit">Submit</button>
         </form>
     </div>
   </div>

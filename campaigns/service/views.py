@@ -1,4 +1,4 @@
-from flask import request, Response
+from flask import render_template, request, Response
 from service import app, mongo
 from service.sms_api import send_sms
 
@@ -22,7 +22,7 @@ PRIMARY_KEY = '_id'
 def add_user():
     params = ['id', 'name', 'phone', 'email']
     id_idx = params.index('id')
-    args = [request.form.get(param) for param in params]
+    args = [request.form[param] for param in params]
     if not all(args):
         return Response('Failure: some arguments are not valid', status=400)
 
@@ -115,3 +115,15 @@ def add_route():
     return Response(
         'Success: sent a thank you message to user {}'.format(user),
         status=200)
+
+@app.route('/users', methods=['GET'])
+def get_users():
+    return render_template('users.html')
+
+@app.route('/donations', methods=['GET'])
+def get_donations():
+    return render_template('donations.html')
+
+@app.route('/sales', methods=['GET'])
+def get_sales():
+    return render_template('sales.html')
