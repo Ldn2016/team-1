@@ -19,7 +19,12 @@
 			<form method="POST" action="/new_video">
 				<div class="form-group">
 					<label for="company_name">Company name:</label>
-					<input class="form-control" id="company_name" type="text" placeholder="Company name">
+					<input name="company_name" class="form-control" id="company_name" type="text" placeholder="Company name">
+				</div>
+
+				<div class="form-group">
+					<label for="value">Value of donations:</label>
+					<input name="value" class="form-control" id="value" type="text" placeholder="Value of donations">
 				</div>
 
 				<button class="btn btn-primary" type="submit">Submit</button>

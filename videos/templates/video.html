@@ -23,25 +23,30 @@ function setupDrawingInterval() {
 			var time = player.getCurrentTime();
 			if (time >= caption.time && time <= caption.time + caption.duration && !caption.visible) {
 				caption.visible = true;
-				caption.element = $('<div class="caption">' + caption.text + '</div>');
-				caption.element.css("left", caption.x + "%").css("top", caption.y + "%");
-				caption.element.css("font-size", caption.size + "em");
-				$("#captions").append(caption.element);
+				if (!caption.element) {
+					caption.element = $('<div class="caption">' + caption.text + '</div>').hide();
+					caption.element.css("left", caption.x + "%").css("top", caption.y + "%");
+					caption.element.css("font-size", caption.size + "em");
+					$("#captions").append(caption.element);
+				}
+				caption.element.fadeIn();
+
 			}
 			if ((time < caption.time || time > caption.time + caption.duration) && caption.visible) {
 				caption.visible = false;
-				caption.element.remove();
+				caption.element.fadeOut();
 			}
 		}
 	}, 100);
 }
 
 function onYouTubeIframeAPIReady() {
+	var videoURL = 'tc72C9iUadU';
 	player = new YT.Player('player', {
-		videoId: 'PC57z-oDPLs',
+		videoId: videoURL,
 		playerVars: {
 			autoplay: 1,
-			playlist: 'PC57z-oDPLs',
+			playlist: videoURL,
 			loop: 1,
 			showinfo: 0,
 			controls: 0
@@ -75,14 +80,17 @@ body {
 
 .caption {
 	color: white;
+	font-family: sans-serif;
 	position: absolute;
 	-webkit-transform: translate(-50%, -50%);
+	text-align: center;
+	text-shadow: #fff 0 0 4px;
 }
 	</style>
 </head>
 
 <body>
-	<div id="info">captions: {{ captions }}</div>
+	<!-- <div id="info">captions: {{ captions }}</div> -->
 	<div id="captions"></div>
 	<div id="player"></div>
 </body>
