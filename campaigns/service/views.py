@@ -96,7 +96,9 @@ def add_route():
     assert user
 
     # Send him a message.
-    send_sms(user['phone'])
+    sms_body = '''Hi {}! Your sofa donation to British Heart Foundation reached
+    <someone else>\'s home. Blabla. Thank you.'''.format(user['name'])
+    send_sms(user['phone'], sms_body)
 
     return Response(
         'Success: sent a thank you message to user {}'.format(user),
